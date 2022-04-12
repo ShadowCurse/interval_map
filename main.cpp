@@ -33,16 +33,16 @@ int main() {
   auto im = interval_map<Key, Value>{'A'};
   auto interval = std::array{'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'};
   auto chars = std::array{'A', 'B', 'C', 'D', 'E', 'F', 'G'};
-  for (auto i{0}; i < 90; i++) {
+  for (auto i{0}; i < 100000000; i++) {
     auto begin = rand() % interval.size();
     auto end = rand() % interval.size();
     auto val = rand() % chars.size();
     im.assign(begin, end, chars[val]);
     for (auto j{begin}; j < end; j++)
       interval[j] = chars[val];
-    print_data(begin, end, val, im, interval);
+    // print_data(begin, end, val, im, interval);
     if (!test_range(begin, end, chars[val], im, interval))
-        break;
+        return -1;
   }
 
   return 0;

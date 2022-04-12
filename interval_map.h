@@ -1,6 +1,7 @@
 #ifndef INTERVAL_MAP_H_
 #define INTERVAL_MAP_H_ 
 
+#include <ios>
 #include <iostream>
 #include <map>
 
@@ -63,8 +64,10 @@ class interval_map {
       const auto lower = m_map.lower_bound(keyBegin);
       m_map.erase(lower, upper);
 
-      // checks if prev range has the same value
-      if (!(std::prev(upper)->second == val) && !is_default_value) 
+      const auto new_lower = m_map.lower_bound(keyBegin);
+      const auto last{new_lower == std::begin(m_map)};
+      const auto eq_prev{std::prev(new_lower)->second == val};
+      if (last && !is_default_value || !last && !eq_prev)
           m_map.insert({keyBegin, val});
   }
 
@@ -78,4 +81,4 @@ class interval_map {
   }
 };
 
-#endif INTERVAL_MAP_H_
+#endif 

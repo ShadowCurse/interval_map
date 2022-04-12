@@ -199,28 +199,29 @@ TEST(test, range_intersects_2_ranges) {
   test_range(im, {'A', 'A', 'B', 'D', 'D', 'D', 'D', 'D', 'D', 'A'});
 }
 
-// TEST(test, set_range_to_default_in_range) {
-//   auto im = interval_map<Key, Value>{'A'};
-//   im.assign(0, 9, 'B');
-//   im.assign(4, 7, 'D');
-//   im.assign(1, 7, 'A');
-//   test_map(im.m_map, {{0, 'B'}, {1, 'A'}, {7, 'B'}, {9, 'A'}});
-//   test_range(im, {'B', 'A', 'A', 'A', 'A', 'A', 'A', 'B', 'B', 'A'});
-// }
+TEST(test, set_range_to_default_in_range) {
+  auto im = interval_map<Key, Value>{'A'};
+  im.assign(0, 9, 'B');
+  im.assign(4, 7, 'D');
+  im.assign(1, 7, 'A');
+  test_map(im.m_map, {{0, 'B'}, {1, 'A'}, {7, 'B'}, {9, 'A'}});
+  test_range(im, {'B', 'A', 'A', 'A', 'A', 'A', 'A', 'B', 'B', 'A'});
+}
 
-// TEST(test, set_range_to_default) {
-//   auto im = interval_map<Key, Value>{'A'};
-//   im.assign(4, 7, 'D');
-//   im.assign(1, 7, 'A');
-//   test_map(im.m_map, {});
-//   test_range(im, {'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'});
-// }
+TEST(test, set_range_to_default) {
+  auto im = interval_map<Key, Value>{'A'};
+  im.assign(4, 7, 'D');
+  im.assign(1, 7, 'A');
+  test_map(im.m_map, {});
+  test_range(im, {'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'});
+}
 
 TEST(test, random) {
+  srand(time(nullptr));
   auto im = interval_map<Key, Value>{'A'};
   auto interval = std::array{'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'};
   auto chars = std::array{'A', 'B', 'C', 'D', 'E', 'F', 'G'};
-  for (auto i{0}; i < 10; i++) {
+  for (auto i{0}; i < 1000000; i++) {
     auto begin = rand() % interval.size();
     auto end = rand() % interval.size();
     auto val = rand() % chars.size();
